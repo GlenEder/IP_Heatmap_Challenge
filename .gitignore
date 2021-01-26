@@ -1,1 +1,5 @@
+#Webstorm files
 .idea
+
+#Dependency dirs
+server/node_modules/
