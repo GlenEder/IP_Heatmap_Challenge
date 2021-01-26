@@ -8,6 +8,16 @@ app.get('/', (req, res) => {
     res.sendFile('index.html', {root: '../client'})
 })
 
+//Client css file
+app.get('/main.css', (req, res) => {
+    res.sendFile('main.css', {root: '../client'})
+})
+
+//Client script file
+app.get('/client.js', (req, res) => {
+    res.sendFile('client.js', {root: '../client'})
+})
+
 
 //Initialize server
 let server = app.listen(8000, () => {
