@@ -17,3 +17,16 @@ window.addEventListener('load', () => {
 })
 
 
+//Test call to server
+async function testCall() {
+    let cordA = [39.6, -86.1]
+    let cordB = [39.9, -86.3]
+    let body = await JSON.stringify({
+        topLeft: cordA,
+        bottomRight: cordB
+    })
+    let result = await fetch('/getcords', {method: 'post', headers: {'Content-Type': 'application/json'}, body})
+    let dataRecieved = await result.json()
+    console.log(dataRecieved)
+
+}

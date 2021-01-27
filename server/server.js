@@ -30,6 +30,10 @@ fs.createReadStream('../GeoLite2-City-CSV_20190618/GeoLite2-City-Blocks-IPv4.csv
 let express = require('express')
 let app = express()
 
+//initalize body parser for handling requests
+let bodyParser = require('body-parser')
+app.use(bodyParser.json())
+
 //Landing page req
 app.get('/', (req, res) => {
     if(serverLogs) console.log("Sending index.html to client...")
@@ -47,19 +51,14 @@ app.get('/client.js', (req, res) => {
 })
 
 
-/*==Never call this again, will crash browsers==*/
-app.get('/allCords', (req, res) => {
-    if(serverLogs) console.log("Sending all coordinates loaded...")
-
-    //null check on cords
-    if(cords === undefined || cords === null) res.send([])
-    else res.send(cords)
-})
 
 
 //Call to get cords in range specified by req.body
 //body { topLeft, bottomRight }
 app.post('/getCords', (req, res) => {
+
+    console.log(req.body)
+    return
 
     //Access values user sent
     let top = req.body.topLeft[1]
