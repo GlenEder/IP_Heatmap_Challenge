@@ -115,6 +115,9 @@ function getCords(left, top, right, bottom, callback) {
     //move to first valid latitude in cords[]
     while(cords[currCord].lat < bottom) currCord++
 
+    //print next ten cords for testing
+    printGeoLiteData(currCord, 10)
+
     //loop till latitude exceeds max
     while(cords[currCord].lat < top) {
 
@@ -134,4 +137,26 @@ function getCords(left, top, right, bottom, callback) {
     //use callback to send valid coordinates
     if(serverLogs) console.log("getCords: Found %d IP addresses in region", region.length)
     callback(region)
+}
+
+/*
+ * Prints desired number of lines in the cords array
+ * @param start -- starting cord position to print
+ * @param numLines -- number of coordinates to print
+ */
+function printGeoLiteData(start, numLines) {
+
+    //check that data has loaded
+    if(!dataLoaded) {
+        console.log("ERROR: GeoLite data not loaded")
+        return
+    }
+
+    //print desired lines of data
+    console.log("===GeoLite Data===")
+    for(let i = 0; i < numLines; i++) {
+        console.log("%d: (%d, %d)", start + i, cords[start + i].lat, cords[start + i].long)
+    }
+
+
 }
