@@ -6,6 +6,9 @@ const csv = require('csv-parse')
 const fs = require('fs')
 const cords = []
 
+//flag for data having been loaded
+let dataLoaded = false
+
 //read file
 fs.createReadStream('../GeoLite2-City-CSV_20190618/GeoLite2-City-Blocks-IPv4.csv')
     .pipe(csv({})).on('data', data => {
@@ -21,7 +24,10 @@ fs.createReadStream('../GeoLite2-City-CSV_20190618/GeoLite2-City-Blocks-IPv4.csv
     .on('end', () => {
         //sort by lat for easier lookup
         cords.sort( (a,b) => {return a.lat > b.lat ? 1 : -1} )
+        //set flag for data being loaded
+        dataLoaded = true
 
+        //log data being loaded
         if(serverLogs) console.log("GeoLite Data Loaded")
     })
 
@@ -57,16 +63,16 @@ app.get('/client.js', (req, res) => {
 //body { topLeft, bottomRight }
 app.post('/getCords', (req, res) => {
 
-    console.log(req.body)
-    return
-
     //Access values user sent
     let top = req.body.topLeft[1]
     let left = req.body.topLeft[0]
     let bottom = req.body.bottomRight[1]
     let right = req.body.bottomRight[0]
 
+    //log request
     if(serverLogs) console.log("Finding cords within %d,%d -- %d,%d", left, top, right, bottom)
+
+
 
     res.send([])
 })
