@@ -72,9 +72,9 @@ app.post('/getCords', (req, res) => {
     //log request
     if(serverLogs) console.log("Finding cords within %d,%d -- %d,%d", left, top, right, bottom)
 
-
-
-    res.send([])
+    getCords(left, top, right, bottom, results => {
+        res.send(results)
+    })
 })
 
 
@@ -89,3 +89,49 @@ let server = app.listen(8000, () => {
 })
 
 
+/*
+ * Returns all cords in the area designated
+ * @param left -- min longitude
+ * @param top -- max latitude
+ * @param right -- max longitude
+ * @param bottom -- min latitude
+ * @param callback -- method called when method completes
+ */
+function getCords(left, top, right, bottom, callback) {
+
+    //ensure data has been loaded, return if not
+    if(!dataLoaded) {
+        if(serverLogs) console.log("ERROR: GeoLite data not loaded")
+        callback([])
+        return
+    }
+
+    //create array to store valid cords
+    let region = [];
+
+    //create object to loop though cords array
+    let currCord = 0
+
+    //move to first valid latitude in cords[]
+    while(cords[currCord].lat < bottom) currCord++
+
+    //loop till latitude exceeds max
+    while(cords[currCord].lat < top) {
+
+        //save local copy of longitude for comparisons
+        let longitude = cords[currCord].long
+
+        //check latitude value
+        if(longitude >= left && longitude <= right) {
+            //add coordinate to region array
+            region.push(cords[currCord])
+        }
+
+        //go to next cord in array
+        currCord++
+    }
+
+    //use callback to send valid coordinates
+    if(serverLogs) console.log("getCords: Found %d IP addresses in region", region.length)
+    callback(region)
+}
