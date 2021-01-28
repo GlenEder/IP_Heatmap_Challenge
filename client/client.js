@@ -4,7 +4,7 @@ let map;
 
 window.addEventListener('load', () => {
 
-    //Create map with starting cords of indy b/c indy I guess
+    //Create map with starting cords of Queenstown, NZ
     map = L.map('mapid').setView([-45.03, 168.66], 13)
 
     //Apply mapbox styling to the map
