@@ -64,7 +64,7 @@ async function createHeatMap(heatmapCords) {
     }
     //create heatmap and add to our map
     else {
-        heat = L.heatLayer(heatmapCords).addTo(map)
+        heat = L.heatLayer(heatmapCords, {radius: 25, gradient: {0.3: 'blue', 0.5: 'lime', 1: 'red'}}).addTo(map)
     }
 
 }
