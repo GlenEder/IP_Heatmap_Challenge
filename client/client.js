@@ -5,7 +5,7 @@ let map;
 window.addEventListener('load', () => {
 
     //Create map with starting cords of indy b/c indy I guess
-    map = L.map('mapid').setView([39.791, -86.148], 13)
+    map = L.map('mapid').setView([-45.03, 168.66], 13)
 
     //Apply mapbox styling to the map
     L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
