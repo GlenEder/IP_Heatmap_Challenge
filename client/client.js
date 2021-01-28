@@ -17,8 +17,21 @@ window.addEventListener('load', () => {
         accessToken: 'pk.eyJ1IjoiZy1lZGVyIiwiYSI6ImNra2VpMmZnNDAwZ2wydm80dHlxcGEwNmoifQ.t6Gkk15Y0w7qU7WMdBPLZA'
     }).addTo(map);
 
+    //Get inital bounds and get heatmap data
     let bounds = map.getBounds()
     getHeatmapCords(bounds)
+
+    //get bounds data after zoom
+    map.on('zoomend', e => {
+        let newBounds = map.getBounds()
+        getHeatmapCords(newBounds)
+    })
+
+    //get bounds data after move
+    map.on('moveend', e => {
+        let newBounds = map.getBounds()
+        getHeatmapCords(newBounds)
+    })
 
 })
 
