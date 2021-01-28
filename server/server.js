@@ -117,6 +117,7 @@ function getCords(top, bottom, left, right, callback) {
     //move to first valid latitude in cords[]
     while(cords[currCord].lat < bottom) currCord++;
 
+    //get starting valid lat cord for debugging
     let start = currCord
 
     //loop till latitude exceeds max
@@ -135,8 +136,8 @@ function getCords(top, bottom, left, right, callback) {
         currCord++
     }
 
-    console.log(cords[start], "@", start)
-    printGeoLiteData(start, currCord - start)
+    //print valid lat cords for debugging
+    // printGeoLiteData(start, currCord - start)
 
     //use callback to send valid coordinates
     if(serverLogs) console.log("getCords: Found %d IP addresses in region", region.length)
