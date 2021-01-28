@@ -49,6 +49,15 @@ async function getHeatmapCords(mapBounds) {
     let dataRecieved = await result.json()
     console.log(dataRecieved)
 
+    //create heatmap with cords recieved from server
+    createHeatMap(dataRecieved)
+
+}
+
+async function createHeatMap(heatmapCords) {
+
+    L.heatLayer(heatmapCords, {radius: 25}).addTo(map)
+
 }
 
 

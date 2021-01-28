@@ -12,10 +12,10 @@ let dataLoaded = false
 //read file
 fs.createReadStream('../GeoLite2-City-CSV_20190618/GeoLite2-City-Blocks-IPv4.csv')
     .pipe(csv({})).on('data', data => {
-        //only save the latitude and longitude values
+        //only save the latitude and l0ngitude values
         let cord = {
             lat: parseFloat(data[7]),
-            long: parseFloat(data[8])
+            lng: parseFloat(data[8])
         }
 
         //save cords to results
@@ -59,6 +59,10 @@ app.get('/client.js', (req, res) => {
     res.sendFile('client.js', {root: '../client'})
 })
 
+//Leaflet heatmap js file
+app.get('/leaflet-heat.js', (req, res) => {
+    res.sendFile('/node_modules/leaflet.heat/dist/leaflet-heat.js', {root: '../client'})
+})
 
 
 
@@ -124,7 +128,7 @@ function getCords(top, bottom, left, right, callback) {
     while(cords[currCord].lat < top) {
 
         //save local copy of longitude for comparisons
-        let longitude = cords[currCord].long
+        let longitude = cords[currCord].lng
 
         //check latitude value
         if(longitude >= left && longitude <= right) {
@@ -160,7 +164,7 @@ function printGeoLiteData(start, numLines) {
     //print desired lines of data
     console.log("===GeoLite Data===")
     for(let i = 0; i < numLines; i++) {
-        console.log("%d: (%d, %d)", start + i, cords[start + i].long, cords[start + i].lat)
+        console.log("%d: (%d, %d)", start + i, cords[start + i].lng, cords[start + i].lat)
     }
 
 
