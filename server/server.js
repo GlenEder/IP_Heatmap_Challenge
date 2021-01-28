@@ -72,8 +72,8 @@ app.post('/getCords', (req, res) => {
     let south = req.body.southWest.lat
     let west = req.body.southWest.lng
 
-
-    getCords(east, north, west, south, results => {
+    //find cords and send results
+    getCords(north, south, west, east, results => {
         res.send(results)
     })
 })
@@ -92,13 +92,13 @@ let server = app.listen(8000, () => {
 
 /*
  * Returns all cords in the area designated
- * @param left -- min longitude
- * @param top -- max latitude
- * @param right -- max longitude
- * @param bottom -- min latitude
+ * @param top -- top-most latitude
+ * @param bottom -- bottom-most latitude
+ * @param left -- left-most  longitude
+ * @param right -- right-most longitude
  * @param callback -- method called when method completes
  */
-function getCords(left, top, right, bottom, callback) {
+function getCords(top, bottom, left, right, callback) {
 
     //ensure data has been loaded, return if not
     if(!dataLoaded) {
@@ -135,7 +135,7 @@ function getCords(left, top, right, bottom, callback) {
         currCord++
     }
 
-    console.log(cords[start].lat)
+    console.log(cords[start], "@", start)
     printGeoLiteData(start, currCord - start)
 
     //use callback to send valid coordinates
