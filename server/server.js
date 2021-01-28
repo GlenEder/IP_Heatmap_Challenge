@@ -28,7 +28,7 @@ fs.createReadStream('../GeoLite2-City-CSV_20190618/GeoLite2-City-Blocks-IPv4.csv
         dataLoaded = true
 
         //print next ten cords for testing
-        printGeoLiteData(0, 200)
+        // printGeoLiteData(0, 200)
         //log data being loaded
         if(serverLogs) console.log("GeoLite Data Loaded")
     })
@@ -37,6 +37,7 @@ fs.createReadStream('../GeoLite2-City-CSV_20190618/GeoLite2-City-Blocks-IPv4.csv
 //create express server
 let express = require('express')
 let app = express()
+app.use(express.json())
 
 //initalize body parser for handling requests
 let bodyParser = require('body-parser')
@@ -48,7 +49,7 @@ app.get('/', (req, res) => {
     res.sendFile('index.html', {root: '../client'})
 })
 
-//Client css file
+//Clie
 app.get('/main.css', (req, res) => {
     res.sendFile('main.css', {root: '../client'})
 })
@@ -66,15 +67,13 @@ app.get('/client.js', (req, res) => {
 app.post('/getCords', (req, res) => {
 
     //Access values user sent
-    let top = req.body.topLeft[1]
-    let left = req.body.topLeft[0]
-    let bottom = req.body.bottomRight[1]
-    let right = req.body.bottomRight[0]
+    let north = req.body.northEast.lat
+    let east = req.body.northEast.lng
+    let south = req.body.southWest.lat
+    let west = req.body.southWest.lng
 
-    //log request
-    if(serverLogs) console.log("Finding cords within %d,%d -- %d,%d", left, top, right, bottom)
 
-    getCords(left, top, right, bottom, results => {
+    getCords(east, north, west, south, results => {
         res.send(results)
     })
 })

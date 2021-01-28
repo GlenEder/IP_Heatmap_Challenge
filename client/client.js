@@ -1,8 +1,11 @@
 
+//Leaflet map object
+let map;
+
 window.addEventListener('load', () => {
 
     //Create map with starting cords of indy b/c indy I guess
-    let map = L.map('mapid').setView([39.791, -86.148], 13)
+    map = L.map('mapid').setView([39.791, -86.148], 13)
 
     //Apply mapbox styling to the map
     L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
@@ -14,7 +17,26 @@ window.addEventListener('load', () => {
         accessToken: 'pk.eyJ1IjoiZy1lZGVyIiwiYSI6ImNra2VpMmZnNDAwZ2wydm80dHlxcGEwNmoifQ.t6Gkk15Y0w7qU7WMdBPLZA'
     }).addTo(map);
 
+    let bounds = map.getBounds()
+    getHeatmapCords(bounds)
+
 })
+
+async function getHeatmapCords(mapBounds) {
+
+    //Stringify data to send to server
+    let body = await JSON.stringify({
+        northEast: mapBounds._northEast,
+        southWest: mapBounds._southWest
+    })
+
+    console.log(body)
+
+    let result = await fetch('/getcords', {method: 'post', headers: {'Content-Type': 'application/json'}, body})
+    let dataRecieved = await result.json()
+    console.log(dataRecieved)
+
+}
 
 
 //Test call to server
@@ -22,8 +44,8 @@ async function testCall() {
     let cordA = [39.6, -51.1]
     let cordB = [49.9, -53.3]
     let body = await JSON.stringify({
-        topLeft: cordA,
-        bottomRight: cordB
+        northEast: cordA,
+        southWest: cordB
     })
     let result = await fetch('/getcords', {method: 'post', headers: {'Content-Type': 'application/json'}, body})
     let dataRecieved = await result.json()
