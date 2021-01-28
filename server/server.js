@@ -14,8 +14,8 @@ fs.createReadStream('../GeoLite2-City-CSV_20190618/GeoLite2-City-Blocks-IPv4.csv
     .pipe(csv({})).on('data', data => {
         //only save the latitude and longitude values
         let cord = {
-            lat: data[7],
-            long: data[8]
+            lat: parseFloat(data[7]),
+            long: parseFloat(data[8])
         }
 
         //save cords to results
@@ -27,6 +27,8 @@ fs.createReadStream('../GeoLite2-City-CSV_20190618/GeoLite2-City-Blocks-IPv4.csv
         //set flag for data being loaded
         dataLoaded = true
 
+        //print next ten cords for testing
+        printGeoLiteData(0, 200)
         //log data being loaded
         if(serverLogs) console.log("GeoLite Data Loaded")
     })
@@ -106,6 +108,7 @@ function getCords(left, top, right, bottom, callback) {
         return
     }
 
+    if(serverLogs) console.log("Finding cords within %d,%d -- %d,%d", left, top, right, bottom)
     //create array to store valid cords
     let region = [];
 
@@ -113,10 +116,9 @@ function getCords(left, top, right, bottom, callback) {
     let currCord = 0
 
     //move to first valid latitude in cords[]
-    while(cords[currCord].lat < bottom) currCord++
+    while(cords[currCord].lat < bottom) currCord++;
 
-    //print next ten cords for testing
-    printGeoLiteData(currCord, 10)
+    let start = currCord
 
     //loop till latitude exceeds max
     while(cords[currCord].lat < top) {
@@ -133,6 +135,9 @@ function getCords(left, top, right, bottom, callback) {
         //go to next cord in array
         currCord++
     }
+
+    console.log(cords[start].lat)
+    printGeoLiteData(start, currCord - start)
 
     //use callback to send valid coordinates
     if(serverLogs) console.log("getCords: Found %d IP addresses in region", region.length)
@@ -155,7 +160,7 @@ function printGeoLiteData(start, numLines) {
     //print desired lines of data
     console.log("===GeoLite Data===")
     for(let i = 0; i < numLines; i++) {
-        console.log("%d: (%d, %d)", start + i, cords[start + i].lat, cords[start + i].long)
+        console.log("%d: (%d, %d)", start + i, cords[start + i].long, cords[start + i].lat)
     }
 
 

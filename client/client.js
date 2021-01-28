@@ -19,8 +19,8 @@ window.addEventListener('load', () => {
 
 //Test call to server
 async function testCall() {
-    let cordA = [39.6, -86.1]
-    let cordB = [39.9, -86.3]
+    let cordA = [39.6, -51.1]
+    let cordB = [49.9, -53.3]
     let body = await JSON.stringify({
         topLeft: cordA,
         bottomRight: cordB
