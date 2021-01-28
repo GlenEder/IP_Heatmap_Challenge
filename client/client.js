@@ -1,6 +1,8 @@
 
 //Leaflet map object
 let map;
+//Leaflet-heat object
+let heat;
 
 window.addEventListener('load', () => {
 
@@ -20,6 +22,7 @@ window.addEventListener('load', () => {
     //Get inital bounds and get heatmap data
     let bounds = map.getBounds()
     getHeatmapCords(bounds)
+
 
     //get bounds data after zoom
     map.on('zoomend', e => {
@@ -43,11 +46,9 @@ async function getHeatmapCords(mapBounds) {
         southWest: mapBounds._southWest
     })
 
-    console.log(body)
-
+    //Request heat map cords from server
     let result = await fetch('/getcords', {method: 'post', headers: {'Content-Type': 'application/json'}, body})
     let dataRecieved = await result.json()
-    console.log(dataRecieved)
 
     //create heatmap with cords recieved from server
     createHeatMap(dataRecieved)
@@ -56,7 +57,15 @@ async function getHeatmapCords(mapBounds) {
 
 async function createHeatMap(heatmapCords) {
 
-    L.heatLayer(heatmapCords, {radius: 25}).addTo(map)
+    //if heatmap already exists, update cords and redraw
+    if(heat) {
+        heat.setLatLngs(heatmapCords)
+        heat.redraw()
+    }
+    //create heatmap and add to our map
+    else {
+        heat = L.heatLayer(heatmapCords).addTo(map)
+    }
 
 }
 
