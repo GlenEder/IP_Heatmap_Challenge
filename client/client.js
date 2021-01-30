@@ -6,13 +6,14 @@ let heat;
 
 window.addEventListener('load', () => {
 
-    //Create map with starting cords of Queenstown, NZ
-    map = L.map('mapid').setView([-45.03, 168.66], 13)
+    //Create map with starting cords of the U S of A
+    map = L.map('mapid').setView([39.74, -93.9771], 5)
 
     //Apply mapbox styling to the map
     L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
         attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
         maxZoom: 18,
+        minZoom: 4,
         id: 'mapbox/dark-v10',
         tileSize: 512,
         zoomOffset: -1,
@@ -50,12 +51,14 @@ async function getHeatmapCords(mapBounds) {
     let result = await fetch('/getcords', {method: 'post', headers: {'Content-Type': 'application/json'}, body})
     let dataRecieved = await result.json()
 
+    console.log(dataRecieved)
+
     //create heatmap with cords recieved from server
     createHeatMap(dataRecieved)
 
 }
 
-async function createHeatMap(heatmapCords) {
+function createHeatMap(heatmapCords) {
 
     //if heatmap already exists, update cords and redraw
     if(heat) {
@@ -64,7 +67,7 @@ async function createHeatMap(heatmapCords) {
     }
     //create heatmap and add to our map
     else {
-        heat = L.heatLayer(heatmapCords, {radius: 25, gradient: {0.3: 'blue', 0.5: 'lime', 1: 'red'}}).addTo(map)
+        heat = L.heatLayer(heatmapCords, {radius: 25, gradient: {0.3: 'blue', 0.4: 'lime', 1: 'red'}}).addTo(map)
     }
 
 }
