@@ -4,7 +4,9 @@ const serverLogs = true
 //csv-parse
 const csv = require('csv-parse')
 const fs = require('fs')
-const cords = []
+
+//hashmap of coordinates we load in
+let cords = new Map()
 
 //flag for data having been loaded
 let dataLoaded = false
@@ -13,24 +15,20 @@ let dataLoaded = false
 fs.createReadStream('../GeoLite2-City-CSV_20190618/GeoLite2-City-Blocks-IPv4.csv')
     .pipe(csv({})).on('data', data => {
         //only save the latitude and l0ngitude values
-        let cord = {
-            lat: parseFloat(data[7]),
-            lng: parseFloat(data[8])
-        }
+        let lat = parseFloat(data[7])
+        let lng = parseFloat(data[8])
 
         //save cords to results
-        cords.push(cord)
+        cords.set(lat, lng)
     })
-    .on('end', () => {
-        //sort by lat for easier lookup
-        cords.sort( (a,b) => {return a.lat > b.lat ? 1 : -1} )
+    .on('end', numRows => {
         //set flag for data being loaded
         dataLoaded = true
 
         //print next ten cords for testing
         // printGeoLiteData(0, 200)
         //log data being loaded
-        if(serverLogs) console.log("GeoLite Data Loaded")
+        if(serverLogs) console.log("GeoLite Data Loaded: %d lines read, %d cords", numRows, cords.size)
     })
 
 
@@ -115,29 +113,17 @@ function getCords(top, bottom, left, right, callback) {
     //create array to store valid cords
     let region = [];
 
-    //create object to loop though cords array
-    let currCord = 0
-
-    //move to first valid latitude in cords[]
-    while(cords[currCord].lat < bottom) currCord++;
-
-    //get starting valid lat cord for debugging
-    let start = currCord
-
-    //loop till latitude exceeds max
-    while(cords[currCord].lat < top) {
-
-        //save local copy of longitude for comparisons
-        let longitude = cords[currCord].lng
+    //loop through cords and find matches
+    for(let [key, val] of cords) {
 
         //check latitude value
-        if(longitude >= left && longitude <= right) {
-            //add coordinate to region array
-            region.push(cords[currCord])
+        if(key >= bottom && key <= top) {
+            //check longitude
+            if(val >= left && val <= right) {
+                region.push({lat: key, lng: val})
+            }
         }
 
-        //go to next cord in array
-        currCord++
     }
 
     //print valid lat cords for debugging
