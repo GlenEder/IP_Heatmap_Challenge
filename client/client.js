@@ -13,7 +13,7 @@ window.addEventListener('load', () => {
     L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
         attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
         maxZoom: 18,
-        minZoom: 4,
+        minZoom: 3,
         id: 'mapbox/dark-v10',
         tileSize: 512,
         zoomOffset: -1,
@@ -67,7 +67,7 @@ function createHeatMap(heatmapCords) {
     }
     //create heatmap and add to our map
     else {
-        heat = L.heatLayer(heatmapCords, {radius: 25, gradient: {0.3: 'blue', 0.4: 'lime', 1: 'red'}}).addTo(map)
+        heat = L.heatLayer(heatmapCords, {radius: 25, gradient: {0.3: 'blue', 0.4: 'lime', 1: 'red'}, maxZoom: 12}).addTo(map)
     }
 
 }
