@@ -59,6 +59,7 @@ fs.createReadStream('../GeoLite2-City-CSV_20190618/GeoLite2-City-Blocks-IPv4.csv
 //create express server
 let express = require('express')
 let app = express()
+let port = process.env.PORT || 3000
 app.use(express.json())
 
 //initalize body parser for handling requests
@@ -118,7 +119,7 @@ app.post('/getSingleCordMax', (req, res) => {
 
 
 //Initialize server
-let server = app.listen(8000, () => {
+let server = app.listen(port, () => {
     let host = server.address().address
     let port = server.address().port
 
