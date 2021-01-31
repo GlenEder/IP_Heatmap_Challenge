@@ -24,3 +24,15 @@ async function getCords(mapBounds) {
     let data = await result.json()
     return data
 }
+
+/*
+ * getSingleCordMax -- returns the largest amount of duplicate singles
+ *
+ * @return -- largest amount of single coordinate duplicates
+ */
+async function getSingleCordMax() {
+    //Request heat map cords from server
+    let result = await fetch('/getSingleCordMax', {method: 'post', headers: {'Content-Type': 'application/json'}})
+    let data = await result.json()
+    return data
+}
