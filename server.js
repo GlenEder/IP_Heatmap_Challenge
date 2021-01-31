@@ -14,7 +14,7 @@ let dataLoaded = false
 let maxSingleCordAmt = 0
 
 //read file
-fs.createReadStream('../GeoLite2-City-CSV_20190618/GeoLite2-City-Blocks-IPv4.csv')
+fs.createReadStream('GeoLite2-City-CSV_20190618/GeoLite2-City-Blocks-IPv4.csv')
     .pipe(csv({})).on('data', data => {
         //only save the latitude and longitude values
         let lat = parseFloat(data[7])
@@ -69,27 +69,27 @@ app.use(bodyParser.json())
 //Landing page req
 app.get('/', (req, res) => {
     if(serverLogs) console.log("Sending index.html to client...")
-    res.sendFile('index.html', {root: '../client'})
+    res.sendFile('index.html', {root: 'client'})
 })
 
 //Clie
 app.get('/main.css', (req, res) => {
-    res.sendFile('main.css', {root: '../client'})
+    res.sendFile('main.css', {root: 'client'})
 })
 
 //Client script file
 app.get('/client.js', (req, res) => {
-    res.sendFile('client.js', {root: '../client'})
+    res.sendFile('client.js', {root: 'client'})
 })
 
 //Leaflet heatmap js file
 app.get('/leaflet-heat.js', (req, res) => {
-    res.sendFile('/node_modules/leaflet.heat/dist/leaflet-heat.js', {root: '../client'})
+    res.sendFile('/node_modules/leaflet.heat/dist/leaflet-heat.js', {root: 'client'})
 })
 
 //Our LatLng api file
 app.get('/IP_LatLng.js', (req, res) => {
-    res.sendFile('/IP_LatLng.js', {root: '../src'})
+    res.sendFile('/IP_LatLng.js', {root: 'src'})
 })
 
 

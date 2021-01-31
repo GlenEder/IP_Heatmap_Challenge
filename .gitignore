@@ -4,6 +4,7 @@
 #Dependency dirs
 server/node_modules/
 client/node_modules/
+/node_modules
 
 #Geolite Data (too large for github)
 GeoLite2-City-CSV_20190618/
