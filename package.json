@@ -1,0 +1,23 @@
+{
+  "name": "ip_heatmap_challenge",
+  "version": "1.0.0",
+  "description": "Node API for Heroku",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GlenEder/IP_Heatmap_Challenge.git"
+  },
+  "author": "Glen M. Eder",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/GlenEder/IP_Heatmap_Challenge/issues"
+  },
+  "homepage": "https://github.com/GlenEder/IP_Heatmap_Challenge#readme",,
+  "engines": {
+    "node": "12.16.1"
+  }
+}
