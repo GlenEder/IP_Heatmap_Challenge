@@ -10,6 +10,8 @@ let cords = new Map()
 
 //flag for data having been loaded
 let dataLoaded = false
+//max amt for calls later
+let maxSingleCordAmt = 0
 
 //read file
 fs.createReadStream('../GeoLite2-City-CSV_20190618/GeoLite2-City-Blocks-IPv4.csv')
@@ -23,6 +25,9 @@ fs.createReadStream('../GeoLite2-City-CSV_20190618/GeoLite2-City-Blocks-IPv4.csv
         if(cords.has(key)) {
             //get previous amount counter
             let newAmt = cords.get(key) + 1;
+
+            //update max single cord amt
+            if(newAmt > maxSingleCordAmt) maxSingleCordAmt = newAmt
 
             //update amount counter
             cords.set(key, {
@@ -97,6 +102,11 @@ app.post('/getCords', (req, res) => {
     getCords(north, south, west, east, results => {
         res.send(results)
     })
+})
+
+//Call to get the single coordinate max amount
+app.post('/getSingleCordMax', (req, res) => {
+    res.send({max: maxSingleCordAmt})
 })
 
 
