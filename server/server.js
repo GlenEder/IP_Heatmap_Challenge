@@ -86,6 +86,11 @@ app.get('/leaflet-heat.js', (req, res) => {
     res.sendFile('/node_modules/leaflet.heat/dist/leaflet-heat.js', {root: '../client'})
 })
 
+//Our LatLng api file
+app.get('/IP_LatLng.js', (req, res) => {
+    res.sendFile('/IP_LatLng.js', {root: '../src'})
+})
+
 
 
 //Call to get cords in range specified by req.body

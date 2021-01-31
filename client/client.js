@@ -42,20 +42,11 @@ window.addEventListener('load', () => {
 
 async function getHeatmapCords(mapBounds) {
 
-    //Stringify data to send to server
-    let body = await JSON.stringify({
-        northEast: mapBounds._northEast,
-        southWest: mapBounds._southWest
-    })
+    //Get cords from API call
+    let dataReceived = await getCords(mapBounds)
 
-    //Request heat map cords from server
-    let result = await fetch('/getcords', {method: 'post', headers: {'Content-Type': 'application/json'}, body})
-    let dataRecieved = await result.json()
-
-    //console.log(dataRecieved)
-
-    //create heatmap with cords recieved from server
-    createHeatMap(dataRecieved)
+    //create heatmap with cords received from server
+    createHeatMap(dataReceived)
 
 }
 
