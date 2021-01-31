@@ -16,7 +16,7 @@
   "bugs": {
     "url": "https://github.com/GlenEder/IP_Heatmap_Challenge/issues"
   },
-  "homepage": "https://github.com/GlenEder/IP_Heatmap_Challenge#readme",,
+  "homepage": "https://github.com/GlenEder/IP_Heatmap_Challenge#readme",
   "engines": {
     "node": "12.16.1"
   }
