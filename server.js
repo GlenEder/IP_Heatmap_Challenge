@@ -59,7 +59,7 @@ fs.createReadStream('GeoLite2-City-CSV_20190618/GeoLite2-City-Blocks-IPv4.csv')
 //create express server
 let express = require('express')
 let app = express()
-let port = process.env.PORT || 5000
+const port = process.env.PORT || 5000
 app.use(express.json())
 
 //initalize body parser for handling requests
