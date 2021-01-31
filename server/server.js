@@ -14,12 +14,31 @@ let dataLoaded = false
 //read file
 fs.createReadStream('../GeoLite2-City-CSV_20190618/GeoLite2-City-Blocks-IPv4.csv')
     .pipe(csv({})).on('data', data => {
-        //only save the latitude and l0ngitude values
+        //only save the latitude and longitude values
         let lat = parseFloat(data[7])
         let lng = parseFloat(data[8])
 
-        //save cords to results
-        cords.set(lat, lng)
+        let key = lat + ":" + lng
+        //check if coordinate already is in map
+        if(cords.has(key)) {
+            //get previous amount counter
+            let newAmt = cords.get(key) + 1;
+
+            //update amount counter
+            cords.set(key, {
+                lat: lat,
+                lng: lng,
+                amt: newAmt
+            })
+        }
+        else {
+            //set coordinate to have 1 as amount if none already exist
+            cords.set(key, {
+                lat: lat,
+                lng: lng,
+                amt: 1
+            })
+        }
     })
     .on('end', numRows => {
         //set flag for data being loaded
@@ -116,11 +135,16 @@ function getCords(top, bottom, left, right, callback) {
     //loop through cords and find matches
     for(let [key, val] of cords) {
 
+        //store value object for easier reading
+        let lat = val.lat
+        let lng = val.lng
+        let amt = val.amt
+
         //check latitude value
-        if(key >= bottom && key <= top) {
+        if(lat >= bottom && lat <= top) {
             //check longitude
-            if(val >= left && val <= right) {
-                region.push({lat: key, lng: val})
+            if(lng >= left && lng <= right) {
+                region.push({lat: lat, lng: lng, amt: amt})
             }
         }
 
