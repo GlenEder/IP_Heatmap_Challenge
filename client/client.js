@@ -64,17 +64,3 @@ function createHeatMap(heatmapCords) {
 
 }
 
-
-//Test call to server
-async function testCall() {
-    let cordA = [39.6, -51.1]
-    let cordB = [49.9, -53.3]
-    let body = await JSON.stringify({
-        northEast: cordA,
-        southWest: cordB
-    })
-    let result = await fetch('/getcords', {method: 'post', headers: {'Content-Type': 'application/json'}, body})
-    let dataRecieved = await result.json()
-    console.log(dataRecieved)
-
-}
