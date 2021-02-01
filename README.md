@@ -2,7 +2,7 @@
 
 Using the GeoLite2 City CSV data, render a heat map of the IPv4 locations
 
-##Demo Link
+## Demo Link
 
 https://heatmap-challenge.herokuapp.com
 
@@ -12,7 +12,7 @@ https://heatmap-challenge.herokuapp.com
 
 ###### Found inside `src` directory
 
-###Methods
+### Methods
 
 1. `getCords(mapBounds)`  
     - returns an array of objects that contains
