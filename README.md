@@ -9,8 +9,9 @@ https://heatmap-challenge.herokuapp.com
 ## IP_LatLng API 
 
 #### To use the API, download and link the file: `IP_LatLng.js`
-
 ###### Found inside `src` directory
+
+Note: if not using in a browser based application, the fetch call will not work
 
 ### Methods
 
