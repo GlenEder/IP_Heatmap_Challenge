@@ -72,7 +72,11 @@ https://heatmap-challenge.herokuapp.com
 - New API's
    - Had to spend a good chunk of time looking into the listed apis
    - Finding APIs to solve issues with csv parsing and unzipping 
-   
+
+- Testing 
+    - Upon trying to write automated test cases, I realized that the fetch call only works when run in a browser
+        
+
 ### Questions 
 - Why does the API we created only serve to send latLng coordinates?
   - There are tons more information to be accessed from the data set
