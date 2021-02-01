@@ -13,47 +13,47 @@ let dataLoaded = false
 //max amt for calls later
 let maxSingleCordAmt = 0
 
-// //read file
-// fs.createReadStream('GeoLite2-City-CSV_20190618/GeoLite2-City-Blocks-IPv4.csv')
-//     .pipe(csv({})).on('data', data => {
-//         //only save the latitude and longitude values
-//         let lat = parseFloat(data[7])
-//         let lng = parseFloat(data[8])
-//
-//         let key = lat + ":" + lng
-//         //check if coordinate already is in map
-//         if(cords.has(key)) {
-//             //get previous amount counter
-//             let newAmt = cords.get(key) + 1;
-//
-//             //update max single cord amt
-//             if(newAmt > maxSingleCordAmt) maxSingleCordAmt = newAmt
-//
-//             //update amount counter
-//             cords.set(key, {
-//                 lat: lat,
-//                 lng: lng,
-//                 amt: newAmt
-//             })
-//         }
-//         else {
-//             //set coordinate to have 1 as amount if none already exist
-//             cords.set(key, {
-//                 lat: lat,
-//                 lng: lng,
-//                 amt: 1
-//             })
-//         }
-//     })
-//     .on('end', numRows => {
-//         //set flag for data being loaded
-//         dataLoaded = true
-//
-//         //print next ten cords for testing
-//         // printGeoLiteData(0, 200)
-//         //log data being loaded
-//         if(serverLogs) console.log("GeoLite Data Loaded: %d lines read, %d cords", numRows, cords.size)
-//     })
+//read file
+fs.createReadStream('GeoLite2-City-CSV_20190618/GeoLite2-City-Blocks-IPv4.csv')
+    .pipe(csv({})).on('data', data => {
+        //only save the latitude and longitude values
+        let lat = parseFloat(data[7])
+        let lng = parseFloat(data[8])
+
+        let key = lat + ":" + lng
+        //check if coordinate already is in map
+        if(cords.has(key)) {
+            //get previous amount counter
+            let newAmt = cords.get(key) + 1;
+
+            //update max single cord amt
+            if(newAmt > maxSingleCordAmt) maxSingleCordAmt = newAmt
+
+            //update amount counter
+            cords.set(key, {
+                lat: lat,
+                lng: lng,
+                amt: newAmt
+            })
+        }
+        else {
+            //set coordinate to have 1 as amount if none already exist
+            cords.set(key, {
+                lat: lat,
+                lng: lng,
+                amt: 1
+            })
+        }
+    })
+    .on('end', numRows => {
+        //set flag for data being loaded
+        dataLoaded = true
+
+        //print next ten cords for testing
+        // printGeoLiteData(0, 200)
+        //log data being loaded
+        if(serverLogs) console.log("GeoLite Data Loaded: %d lines read, %d cords", numRows, cords.size)
+    })
 
 
 //create express server
