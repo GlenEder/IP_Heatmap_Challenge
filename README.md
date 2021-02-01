@@ -52,3 +52,24 @@ https://heatmap-challenge.herokuapp.com
 8. Upload and Unzip csv data on server startup
    - Had to upload zip file of data due to github file restrictions
    - Used [extract-zip](https://www.npmjs.com/package/extract-zip) to decompress zipped data
+
+
+### Challenges Faced 
+- Heroku
+  - This was by far the biggest pain of the whole challenge
+      - Constant issues with file access 
+      - Had to work around issue of no static file hosting
+- Time 
+   - This took longer than I thought it would
+   - Lots of debugging
+      - Calculation mistakes 
+      - Misspellings
+      - File pathing
+   - Start of new job at restaurant
+      - Can't live for free am I right
+      - Limited to a couple of hours each day 
+
+- New API's
+   - Had to spend a good chunk of time looking into the listed apis
+   - Finding APIs to solve issues with csv parsing and unzipping 
+   
