@@ -73,3 +73,6 @@ https://heatmap-challenge.herokuapp.com
    - Had to spend a good chunk of time looking into the listed apis
    - Finding APIs to solve issues with csv parsing and unzipping 
    
+### Questions 
+- Why does the API we created only serve to send latLng coordinates?
+- Should I have hosted/created a database to hold the GeoLiteData instead of loading the data into RAM?
