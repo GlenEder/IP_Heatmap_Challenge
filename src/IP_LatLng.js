@@ -22,7 +22,8 @@ async function getCords(mapBounds) {
     })
 
     //Request heat map cords from server
-    let result = await fetch(server + '/getcords', {method: 'post', headers: {'Content-Type': 'application/json'}, body})
+    // let result = await fetch(server + '/getcords', {method: 'post', headers: {'Content-Type': 'application/json'}, body})
+    let result = await fetch('/getcords', {method: 'post', headers: {'Content-Type': 'application/json'}, body})
     let data = await result.json()
     return data
 }

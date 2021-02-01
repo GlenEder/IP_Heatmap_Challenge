@@ -22,19 +22,13 @@ window.addEventListener('load', () => {
 
     //get bounds data after zoom
     map.on('zoomend', e => {
-        let newBounds = map.getBounds()
-        getHeatmapCords(newBounds)
+        loadMap()
     })
 
     //get bounds data after move
     map.on('moveend', e => {
-        let newBounds = map.getBounds()
-        getHeatmapCords(newBounds)
+        loadMap()
     })
-
-
-    //show loading overlay
-    JsLoadingOverlay.show({spinnerIcon: 'ball-pulse'})
 
     //fetch data and render
     loadMap()
@@ -43,14 +37,15 @@ window.addEventListener('load', () => {
 
 async function loadMap() {
 
-    console.log("Attempting to load map")
+    //show loading overlay
+    JsLoadingOverlay.show({spinnerIcon: 'ball-pulse'})
 
     //Get inital bounds and get heatmap data
     let bounds = map.getBounds()
     let success = await getHeatmapCords(bounds)
 
-    //if data didnt load reload map in 1 second
-    if(!success) setTimeout(loadMap, 1000)
+    //if data didnt load reload map in 2 second
+    if(!success) setTimeout(loadMap, 2000)
     else JsLoadingOverlay.hide()
 }
 
@@ -67,7 +62,7 @@ async function getHeatmapCords(mapBounds) {
 
 function createHeatMap(heatmapCords) {
 
-    if(heatmapCords.size == 0) return false
+    if(heatmapCords.length == 0) return false
 
     //if heatmap already exists, update cords and redraw
     if(heat) {
