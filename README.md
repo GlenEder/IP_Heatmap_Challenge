@@ -75,4 +75,12 @@ https://heatmap-challenge.herokuapp.com
    
 ### Questions 
 - Why does the API we created only serve to send latLng coordinates?
+  - There are tons more information to be accessed from the data set
 - Should I have hosted/created a database to hold the GeoLiteData instead of loading the data into RAM?
+
+### Observations
+- There are a lot of coordinates in this data set
+  - That said, there are also a lot of duplicates in the set
+- Leaflet/Mapbox coordinates will go on forever in longitude directions instead of wrapping 
+- Gitignore file == github repo saver
+- Markdown is not implemented consistently across the web
