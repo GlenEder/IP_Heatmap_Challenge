@@ -20,11 +20,6 @@ window.addEventListener('load', () => {
         accessToken: 'pk.eyJ1IjoiZy1lZGVyIiwiYSI6ImNra2VpMmZnNDAwZ2wydm80dHlxcGEwNmoifQ.t6Gkk15Y0w7qU7WMdBPLZA'
     }).addTo(map);
 
-    //Get inital bounds and get heatmap data
-    let bounds = map.getBounds()
-    getHeatmapCords(bounds)
-
-
     //get bounds data after zoom
     map.on('zoomend', e => {
         let newBounds = map.getBounds()
@@ -37,7 +32,27 @@ window.addEventListener('load', () => {
         getHeatmapCords(newBounds)
     })
 
+
+    //show loading overlay
+    JsLoadingOverlay.show({spinnerIcon: 'ball-pulse'})
+
+    //fetch data and render
+    loadMap()
+
 })
+
+async function loadMap() {
+
+    console.log("Attempting to load map")
+
+    //Get inital bounds and get heatmap data
+    let bounds = map.getBounds()
+    let success = await getHeatmapCords(bounds)
+
+    //if data didnt load reload map in 1 second
+    if(!success) setTimeout(loadMap, 1000)
+    else JsLoadingOverlay.hide()
+}
 
 
 async function getHeatmapCords(mapBounds) {
@@ -46,11 +61,13 @@ async function getHeatmapCords(mapBounds) {
     let dataReceived = await getCords(mapBounds)
 
     //create heatmap with cords received from server
-    createHeatMap(dataReceived)
+    return createHeatMap(dataReceived)
 
 }
 
 function createHeatMap(heatmapCords) {
+
+    if(heatmapCords.size == 0) return false
 
     //if heatmap already exists, update cords and redraw
     if(heat) {
@@ -61,6 +78,8 @@ function createHeatMap(heatmapCords) {
     else {
         heat = L.heatLayer(heatmapCords, {radius: 25, gradient: {0.3: 'blue', 0.4: 'lime', 1: 'red'}, maxZoom: 12}).addTo(map)
     }
+
+    return true
 
 }
 
