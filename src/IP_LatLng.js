@@ -5,6 +5,8 @@
  * coordinates from the GeoLite IPv4 data set.
  */
 
+let server = "https://heatmap-challenge.herokuapp.com"
+
 /*
  * getCords -- returns all coordinates in the data set within the bounds provided
  * @param mapBounds -- contains latLng objects of { _northEast, _southWest } corners
@@ -20,7 +22,7 @@ async function getCords(mapBounds) {
     })
 
     //Request heat map cords from server
-    let result = await fetch('/getcords', {method: 'post', headers: {'Content-Type': 'application/json'}, body})
+    let result = await fetch(server + '/getcords', {method: 'post', headers: {'Content-Type': 'application/json'}, body})
     let data = await result.json()
     return data
 }
@@ -32,7 +34,14 @@ async function getCords(mapBounds) {
  */
 async function getSingleCordMax() {
     //Request heat map cords from server
-    let result = await fetch('/getSingleCordMax', {method: 'post', headers: {'Content-Type': 'application/json'}})
+    let result = await fetch(server + '/getSingleCordMax', {method: 'post', headers: {'Content-Type': 'application/json'}})
     let data = await result.json()
     return data
+}
+
+
+/* Export functions */
+module.exports = {
+    getCords,
+    getSingleCordMax
 }
