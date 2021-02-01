@@ -95,7 +95,7 @@ app.get('/client.js', (req, res) => {
 
 //Leaflet heatmap js file
 app.get('/leaflet-heat.js', (req, res) => {
-    res.sendFile('/node_modules/leaflet.heat/dist/leaflet-heat.js', {root: 'client'})
+    res.sendFile('/leaflet.heat/dist/leaflet-heat.js', {root: 'node_modules'})
 })
 
 //Our LatLng api file
