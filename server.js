@@ -16,7 +16,7 @@ let dataLoaded = false
 //max amt for calls later
 let maxSingleCordAmt = 0
 
-async function initalizeData() {
+async function initializeData() {
 
     await extract('GeoLiteData.zip', {dir: process.cwd()})
 
@@ -65,7 +65,7 @@ async function initalizeData() {
 }
 
 //call startup method
-initalizeData()
+initializeData()
 
 //create express server
 let express = require('express')
