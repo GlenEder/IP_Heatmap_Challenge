@@ -6,7 +6,7 @@ Using the GeoLite2 City CSV data, render a heat map of the IPv4 locations
 #### To use the API, download and link the file: `IP_LatLng.js`
 ###### Found inside `src` directory 
 
-####Methods
+###Methods
 1. `getCords(mapBounds)`  
     - returns an array of objects that contains
         1. lat - latitude of coordinate
