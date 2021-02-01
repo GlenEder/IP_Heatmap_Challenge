@@ -5,6 +5,9 @@ const serverLogs = true
 const csv = require('csv-parse')
 const fs = require('fs')
 
+//extract-zip
+const extract = require('extract-zip')
+
 //hashmap of coordinates we load in
 let cords = new Map()
 
@@ -13,9 +16,13 @@ let dataLoaded = false
 //max amt for calls later
 let maxSingleCordAmt = 0
 
-//read file
-fs.createReadStream('GeoLite2-City-CSV_20190618/GeoLite2-City-Blocks-IPv4.csv')
-    .pipe(csv({})).on('data', data => {
+async function initalizeData() {
+
+    await extract('GeoLiteData.zip', {dir: process.cwd()})
+
+    //read file
+    fs.createReadStream('GeoLite2-City-CSV_20190618/GeoLite2-City-Blocks-IPv4.csv')
+        .pipe(csv({})).on('data', data => {
         //only save the latitude and longitude values
         let lat = parseFloat(data[7])
         let lng = parseFloat(data[8])
@@ -45,16 +52,20 @@ fs.createReadStream('GeoLite2-City-CSV_20190618/GeoLite2-City-Blocks-IPv4.csv')
             })
         }
     })
-    .on('end', numRows => {
-        //set flag for data being loaded
-        dataLoaded = true
+        .on('end', numRows => {
+            //set flag for data being loaded
+            dataLoaded = true
 
-        //print next ten cords for testing
-        // printGeoLiteData(0, 200)
-        //log data being loaded
-        if(serverLogs) console.log("GeoLite Data Loaded: %d lines read, %d cords", numRows, cords.size)
-    })
+            //print next ten cords for testing
+            // printGeoLiteData(0, 200)
+            //log data being loaded
+            if(serverLogs) console.log("GeoLite Data Loaded: %d lines read, %d cords", numRows, cords.size)
+        })
 
+}
+
+//call startup method
+initalizeData()
 
 //create express server
 let express = require('express')
