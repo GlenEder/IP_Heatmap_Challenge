@@ -1,6 +1,7 @@
 # IP_Heatmap_Challenge
 Using the GeoLite2 City CSV data, render a heat map of the IPv4 locations
-##[Demo Link](https://heatmap-challenge.herokuapp.com)
+##Demo Link
+https://heatmap-challenge.herokuapp.com
 
 ## IP_LatLng API 
 #### To use the API, download and link the file: `IP_LatLng.js`
