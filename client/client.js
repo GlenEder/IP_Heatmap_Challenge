@@ -35,10 +35,15 @@ window.addEventListener('load', () => {
 
 })
 
+let spinnerDisplayed = false
+
 async function loadMap() {
 
-    //show loading overlay
-    JsLoadingOverlay.show({spinnerIcon: 'ball-pulse'})
+    //show loading overlay if not already shown
+    if(!spinnerDisplayed) JsLoadingOverlay.show({spinnerIcon: 'ball-pulse'})
+
+    //set display flag
+    spinnerDisplayed = true
 
     //Get inital bounds and get heatmap data
     let bounds = map.getBounds()
@@ -46,7 +51,12 @@ async function loadMap() {
 
     //if data didnt load reload map in 2 second
     if(!success) setTimeout(loadMap, 2000)
-    else JsLoadingOverlay.hide()
+    else  {
+        //reset dislay flag
+        spinnerDisplayed = false
+        //hide spinner
+        JsLoadingOverlay.hide()
+    }
 }
 
 
